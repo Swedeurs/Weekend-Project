@@ -1,26 +1,41 @@
-const pokemonList = document.getElementById("fetch-pokemon") as HTMLInputElement;
-const submitButton = document.getElementById("submit") as HTMLButtonElement;
-const pokemonDisplay = document.getElementById("pokemon-display") as HTMLDivElement;
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('pokemon-form');
+    const pokemonInfoSection = document.getElementById('pokemon-info');
+    const errorMessage = document.getElementById('error-message');
+    const pokemonNameEl = document.getElementById('pokemon-name');
+    const pokemonImageEl = document.getElementById('pokemon-image');
+    const pokemonTypeEl = document.getElementById('pokemon-type');
+    const pokemonAbilitiesEl = document.getElementById('pokemon-abilities');
 
-submitButton?addEventListener('click', async (e) => {
-    e.preventDefault();
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-const pokemonNumber = pokemonInput.value;
-if(!pokemonNumber){
-    return ("Please provide a number.");
-}
+        const pokemonNumber = document.getElementById('pokemon-number').value;
 
-try {
-    const response = await fetch("http://localhost:3000"), {
-        method: "GET",
-        headers: {
-            "accept": "application/json"
+        try {
+            const response = await fetch(`http://localhost:3000/pokemon/${pokemonNumber}`);
+
+            if (!response.ok) {
+                throw new Error('Pokémon not found');
+            }
+
+            const pokemonData = await response.json();
+
+
+            pokemonNameEl.textContent = pokemonData.name;
+            pokemonImageEl.src = pokemonData.image;
+            pokemonImageEl.alt = pokemonData.name;
+            pokemonTypeEl.textContent = pokemonData.type.join(', ');
+            pokemonAbilitiesEl.textContent = pokemonData.abilities.join(', ');
+
+
+            pokemonInfoSection.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+        } catch (error) {
+
+            errorMessage.style.display = 'block';
+            pokemonInfoSection.style.display = 'none';
         }
     });
-
-    if(!response.ok) {
-        throw new Error("Pokémon not found. Please enter a valid number.");
-    }
-
-    const pokemonData = await response.json();
 });
