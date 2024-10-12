@@ -1,72 +1,82 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
     <title>PokéNetor</title>
     <style>
-        body {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            text-align: center; 
-        }
-        main {
-            margin: 20px; 
-        }
-        #pokemon-form {
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            gap: 10px; 
-        }
-        #pokemon-info {
-            margin-top: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-        #error-message {
-            color: red;
-            margin-top: 10px; 
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        text-align: center;
+      }
+      main {
+        margin: 20px;
+      }
+      #pokemon-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      #pokemon-info {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #error-message {
+        color: red;
+        margin-top: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Pokémon Generator</h1>
-        <p>Enter a number (1-151) to find your Pokémon!</p>
+      <h1>Pokémon Generator</h1>
+      <p>Enter a number (1-151) to find your Pokémon!</p>
     </header>
     <main class="container">
-        <form id="pokemon-form">
-            <input
-                type="number"
-                id="pokemon-number"
-                name="pokemon-number"
-                placeholder="Enter Pokémon number"
-                aria-label="Enter Pokémon number"
-                min="1"
-                max="151"
-                required
-            />
-            <button type="submit">Get Pokémon</button>
-            <button type="button" id="randomize-button">Randomize</button>
-        </form>
+      <form id="pokemon-form">
+        <input
+          type="number"
+          id="pokemon-number"
+          name="pokemon-number"
+          placeholder="Enter Pokémon number"
+          aria-label="Enter Pokémon number"
+          min="1"
+          max="151"
+          required
+        />
+        <button type="submit">Get Pokémon</button>
+        <button type="button" id="randomize-button">Randomize</button>
+      </form>
 
-        <section id="pokemon-info" style="display:none;">
-            <h2 id="pokemon-name"></h2>
-            <img id="pokemon-image" src="" alt="" style="width:150px;height:150px;" />
-            <p><strong>Type:</strong> <span id="pokemon-type"></span></p>
-            <p><strong>Abilities:</strong> <span id="pokemon-abilities"></span></p>
-        </section>
+      <section id="pokemon-info" style="display: none">
+        <h2 id="pokemon-name"></h2>
+        <img
+          id="pokemon-image"
+          src=""
+          alt=""
+          style="width: 150px; height: 150px"
+        />
+        <p><strong>Type:</strong> <span id="pokemon-type"></span></p>
+        <p><strong>Abilities:</strong> <span id="pokemon-abilities"></span></p>
+      </section>
 
-        <p id="error-message" style="display:none;">Pokémon not found! Please enter a valid number.</p>
+      <p id="error-message" style="display: none">
+        Pokémon not found! Please enter a valid number.
+      </p>
     </main>
     <script src="./dist/index.js"></script>
-</body>
+  </body>
 </html>
