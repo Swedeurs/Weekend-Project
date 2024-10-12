@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <title>PokéNetor</title>
     <style>
-       
         body {
             display: flex; 
             flex-direction: column; 
@@ -17,28 +16,21 @@
             margin: 0; 
             text-align: center; 
         }
-
         main {
             margin: 20px; 
         }
-
-       
         #pokemon-form {
             display: flex; 
             flex-direction: column;
             align-items: center; 
             gap: 10px; 
         }
-
-       
         #pokemon-info {
             margin-top: 20px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
         }
-
-        
         #error-message {
             color: red;
             margin-top: 10px; 
@@ -50,7 +42,6 @@
         <h1>Pokémon Generator</h1>
         <p>Enter a number (1-151) to find your Pokémon!</p>
     </header>
-
     <main class="container">
         <form id="pokemon-form">
             <input
@@ -64,6 +55,7 @@
                 required
             />
             <button type="submit">Get Pokémon</button>
+            <button type="button" id="randomize-button">Randomize</button>
         </form>
 
         <section id="pokemon-info" style="display:none;">
@@ -75,7 +67,6 @@
 
         <p id="error-message" style="display:none;">Pokémon not found! Please enter a valid number.</p>
     </main>
-
     <script src="./dist/index.js"></script>
 </body>
 </html>
