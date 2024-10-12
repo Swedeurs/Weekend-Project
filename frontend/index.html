@@ -1,26 +1,45 @@
 <!doctype html>
 <html lang="en">
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
-  >
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="css/pico.min.css">
-    <title>Pokenetor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <title>PokéNetor</title>
   </head>
   <body>
-    <input
-  type="search"
-  name="search"
-  placeholder="Search"
-  aria-label="Search"
-/>
+    <header>
+      <h1>Pokémon Generator</h1>
+      <p>Enter a number (1-151) to find your Pokémon!</p>
+    </header>
+
     <main class="container">
-      <h1></h1>
+      <form id="pokemon-form">
+        <input
+          type="number"
+          id="pokemon-number"
+          name="pokemon-number"
+          placeholder="Enter Pokémon number"
+          aria-label="Enter Pokémon number"
+          min="1"
+          max="151"
+          required
+        />
+        <button type="submit">Get Pokémon</button>
+      </form>
+
+      
+      <section id="pokemon-info" style="display:none;">
+        <h2 id="pokemon-name"></h2>
+        <img id="pokemon-image" src="" alt="" style="width:150px;height:150px;" />
+        <p><strong>Type:</strong> <span id="pokemon-type"></span></p>
+        <p><strong>Abilities:</strong> <span id="pokemon-abilities"></span></p>
+      </section>
+
+     
+      <p id="error-message" style="color:red; display:none;">Pokémon not found! Please enter a valid number.</p>
     </main>
+
+    <script src="./dist/index.js"></script>
   </body>
-  <script src="./dist/index.js"></script>
 </html>
