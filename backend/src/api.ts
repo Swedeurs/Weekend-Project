@@ -13,4 +13,4 @@ if (req.method === 'POST') {
       'Access-Control-Allow-Origin': 'http://localhost:8080'
     });
 
-});
+}});
