@@ -1,41 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('pokemon-form');
-    const pokemonInfoSection = document.getElementById('pokemon-info');
-    const errorMessage = document.getElementById('error-message');
-    const pokemonNameEl = document.getElementById('pokemon-name');
-    const pokemonImageEl = document.getElementById('pokemon-image');
-    const pokemonTypeEl = document.getElementById('pokemon-type');
-    const pokemonAbilitiesEl = document.getElementById('pokemon-abilities');
+const form = document.getElementById("pokemon-form");
+const pokemonInfo = document.getElementById("pokemon-info");
+const pokemonName = document.getElementById("pokemon-name");
+const pokemonImage = document.getElementById("pokemon-image");
+const pokemonType = document.getElementById("pokemon-type");
+const pokemonAbilities = document.getElementById("pokemon-abilities");
+const errorMessage = document.getElementById("error-message");
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+// Form submission event listener
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const pokemonNumber = parseInt(
+    document.getElementById("pokemon-number").value
+  );
+  displayPokemon(pokemonNumber);
+});
 
-        const pokemonNumber = document.getElementById('pokemon-number').value;
+// Function to display Pokémon
+async function displayPokemon(number) {
+  try {
+    const response = await fetch(`http://localhost:3000/pokemon/${number}`);
+    const pokemon = await response.json();
 
-        try {
-            const response = await fetch(`http://localhost:3000/pokemon/${pokemonNumber}`);
+    if (response.ok) {
+      pokemonName.textContent = pokemon.name;
+      pokemonImage.src = pokemon.image;
+      pokemonType.textContent = pokemon.type.join(", ");
+      pokemonAbilities.textContent = pokemon.abilities.join(", ");
+      pokemonInfo.style.display = "block";
+      errorMessage.style.display = "none";
+    } else {
+      throw new Error(pokemon.message);
+    }
+  } catch (error) {
+    errorMessage.textContent = error.message;
+    errorMessage.style.display = "block";
+    pokemonInfo.style.display = "none";
+  }
+}
 
-            if (!response.ok) {
-                throw new Error('Pokémon not found');
-            }
-
-            const pokemonData = await response.json();
-
-
-            pokemonNameEl.textContent = pokemonData.name;
-            pokemonImageEl.src = pokemonData.image;
-            pokemonImageEl.alt = pokemonData.name;
-            pokemonTypeEl.textContent = pokemonData.type.join(', ');
-            pokemonAbilitiesEl.textContent = pokemonData.abilities.join(', ');
-
-
-            pokemonInfoSection.style.display = 'block';
-            errorMessage.style.display = 'none';
-
-        } catch (error) {
-
-            errorMessage.style.display = 'block';
-            pokemonInfoSection.style.display = 'none';
-        }
-    });
+// Randomize button event listener
+const randomizeButton = document.getElementById("randomize-button");
+randomizeButton.addEventListener("click", async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/pokemon/random`);
+    if (response.ok) {
+      const randomPokemon = await response.json();
+      displayPokemon(randomPokemon.number); // Display the randomly selected Pokémon
+    } else {
+      throw new Error("Failed to fetch random Pokémon");
+    }
+  } catch (error) {
+    errorMessage.textContent = error.message;
+    errorMessage.style.display = "block";
+    pokemonInfo.style.display = "none";
+  }
 });

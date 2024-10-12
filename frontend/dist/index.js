@@ -1,41 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('pokemon-form');
-    const pokemonInfoSection = document.getElementById('pokemon-info');
-    const errorMessage = document.getElementById('error-message');
-    const pokemonNameEl = document.getElementById('pokemon-name');
-    const pokemonImageEl = document.getElementById('pokemon-image');
-    const pokemonTypeEl = document.getElementById('pokemon-type');
-    const pokemonAbilitiesEl = document.getElementById('pokemon-abilities');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const pokemonNumber = document.getElementById('pokemon-number').value;
-
-        try {
-            const response = await fetch(`http://localhost:3000/pokemon/${pokemonNumber}`);
-
-            if (!response.ok) {
-                throw new Error('Pokémon not found');
-            }
-
-            const pokemonData = await response.json();
+const form = document.getElementById('pokemon-form');
+const pokemonInfo = document.getElementById('pokemon-info');
+const pokemonName = document.getElementById('pokemon-name');
+const pokemonImage = document.getElementById('pokemon-image');
+const pokemonType = document.getElementById('pokemon-type');
+const pokemonAbilities = document.getElementById('pokemon-abilities');
+const errorMessage = document.getElementById('error-message');
 
 
-            pokemonNameEl.textContent = pokemonData.name;
-            pokemonImageEl.src = pokemonData.image;
-            pokemonImageEl.alt = pokemonData.name;
-            pokemonTypeEl.textContent = pokemonData.type.join(', ');
-            pokemonAbilitiesEl.textContent = pokemonData.abilities.join(', ');
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const pokemonNumber = parseInt(document.getElementById('pokemon-number').value);
+    displayPokemon(pokemonNumber);
+});
 
 
-            pokemonInfoSection.style.display = 'block';
+async function displayPokemon(number) {
+    try {
+        const response = await fetch(`http://localhost:3000/pokemon/${number}`);
+        const pokemon = await response.json();
+
+        if (response.ok) {
+            pokemonName.textContent = pokemon.name;
+            pokemonImage.src = pokemon.image;
+            pokemonType.textContent = pokemon.type.join(', ');
+            pokemonAbilities.textContent = pokemon.abilities.join(', ');
+            pokemonInfo.style.display = 'block';
             errorMessage.style.display = 'none';
-
-        } catch (error) {
-
-            errorMessage.style.display = 'block';
-            pokemonInfoSection.style.display = 'none';
+        } else {
+            throw new Error(pokemon.message);
         }
-    });
+    } catch (error) {
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+        pokemonInfo.style.display = 'none';
+    }
+}
+
+
+const randomizeButton = document.getElementById('randomize-button');
+randomizeButton.addEventListener('click', async () => {
+    const response = await fetch(`http://localhost:3000/pokemon/random`);
+    if (response.ok) {
+        const randomPokemon = await response.json();
+        displayPokemon(randomPokemon.number); 
+    } else {
+        console.error('Failed to fetch random Pokémon');
+    }
 });
